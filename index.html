@@ -2,75 +2,68 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ClickObra App</title>
   <style>
-    * {
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    body, html {
-      width: 100%;
-      height: 100%;
-      background-color: black;
-      overflow: hidden;
+      background: black url('fundo_landing_clickobra.png') no-repeat center center fixed;
+      background-size: cover;
       font-family: Arial, sans-serif;
+      overflow: hidden;
     }
 
     .container {
       position: relative;
-      width: 100%;
-      height: 100%;
-      background-image: url('fundo_landing_clickobra.png');
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      width: 100vw;
+      height: 100vh;
     }
 
     .logo {
-      width: 260px;
-      margin-bottom: 40px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 180px;
+      transform: translate(-50%, -50%);
+      z-index: 2;
     }
 
     .brain {
-      width: 140px;
-      animation: pulse 2s infinite;
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      width: 120px;
+      transform: translateX(-50%);
+      animation: pulse 2s infinite ease-in-out;
+      z-index: 1;
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.9; }
-      50% { transform: scale(1.05); opacity: 1; }
-      100% { transform: scale(1); opacity: 0.9; }
+      0%, 100% {
+        transform: translateX(-50%) scale(1);
+      }
+      50% {
+        transform: translateX(-50%) scale(1.1);
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="logo_clickobra.png" alt="ClickObra App" class="logo">
-    <img src="cerebro.png" alt="Agente Inteligente" class="brain">
+    <img src="cerebro.png" alt="Cérebro" class="brain" />
+    <img src="logo_clickobra.png" alt="Logo ClickObra" class="logo" />
   </div>
 
+  <audio autoplay>
+    <source src="boas_vindas_clickobra.mp3" type="audio/mpeg">
+    Seu navegador não suporta áudio automático.
+  </audio>
+
   <script>
-    const frase = "Olá! Seja muito bem-vindo ao ClickObra App. Eu sou sua atendente inteligente. Vamos construir juntos? Aguarde um instante...";
-
-    const synth = window.speechSynthesis;
-    const utter = new SpeechSynthesisUtterance(frase);
-    utter.lang = "pt-BR";
-    utter.voice = speechSynthesis.getVoices().find(voice => voice.name.includes("Google") && voice.name.toLowerCase().includes("feminina")) || null;
-    utter.pitch = 1.1;
-    utter.rate = 1;
-
-    window.onload = () => {
-      speechSynthesis.speak(utter);
-      setTimeout(() => {
-        window.location.href = "produtos.html";
-      }, 7000);
-    };
+    setTimeout(() => {
+      window.location.href = "produtos.html";
+    }, 5000);
   </script>
 </body>
 </html>
