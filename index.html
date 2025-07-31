@@ -1,69 +1,76 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ClickObra App</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-        }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-        p {
-            font-size: 1.3rem;
-            margin: 0.5rem 0 2rem;
-        }
-        button {
-            background-color: #ff6600;
-            border: none;
-            padding: 12px 25px;
-            font-size: 1.1rem;
-            color: #fff;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #e65c00;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ClickObra App</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-image: url('fundo_landing_clickobra.png');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo {
+      width: 260px;
+      margin-bottom: 40px;
+    }
+
+    .brain {
+      width: 140px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.9; }
+    }
+  </style>
 </head>
 <body>
-    <h1>ClickObra App</h1>
-    <p id="boasVindas">Olá, seja bem-vindo!</p>
-    <button onclick="falar()">Clique para ouvir a atendente</button>
+  <div class="container">
+    <img src="logo_clickobra.png" alt="ClickObra App" class="logo">
+    <img src="cerebro.png" alt="Agente Inteligente" class="brain">
+  </div>
 
-    <script>
-        const nomeUsuario = localStorage.getItem("nome") || "cliente";
-        const mensagem = `Olá ${nomeUsuario}, seja bem-vindo ao ClickObra App! Estou aqui para te ajudar.`;
+  <script>
+    const frase = "Olá! Seja muito bem-vindo ao ClickObra App. Eu sou sua atendente inteligente. Vamos construir juntos? Aguarde um instante...";
 
-        document.getElementById("boasVindas").textContent = mensagem;
+    const synth = window.speechSynthesis;
+    const utter = new SpeechSynthesisUtterance(frase);
+    utter.lang = "pt-BR";
+    utter.voice = speechSynthesis.getVoices().find(voice => voice.name.includes("Google") && voice.name.toLowerCase().includes("feminina")) || null;
+    utter.pitch = 1.1;
+    utter.rate = 1;
 
-        function falar() {
-            const msg = new SpeechSynthesisUtterance(mensagem);
-            const voices = speechSynthesis.getVoices();
-            const vozFeminina = voices.find(v => v.lang.includes("pt-BR") && v.name.toLowerCase().includes("luciana") || v.name.toLowerCase().includes("camila")) || voices.find(v => v.lang.includes("pt-BR"));
-            if (vozFeminina) msg.voice = vozFeminina;
-            msg.rate = 1;
-            msg.pitch = 1;
-            speechSynthesis.speak(msg);
-        }
-
-        // Para garantir que as vozes estejam carregadas antes de usar
-        window.speechSynthesis.onvoiceschanged = () => {};
-    </script>
+    window.onload = () => {
+      speechSynthesis.speak(utter);
+      setTimeout(() => {
+        window.location.href = "produtos.html";
+      }, 7000);
+    };
+  </script>
 </body>
 </html>
