@@ -1,32 +1,69 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClickObra App</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ClickObra App</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        p {
+            font-size: 1.3rem;
+            margin: 0.5rem 0 2rem;
+        }
+        button {
+            background-color: #ff6600;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #e65c00;
+        }
+    </style>
 </head>
 <body>
-  <header>
     <h1>ClickObra App</h1>
-    <p>Sua obra começa com um clique.</p>
-  </header>
+    <p id="boasVindas">Olá, seja bem-vindo!</p>
+    <button onclick="falar()">Clique para ouvir a atendente</button>
 
-  <main>
-    <section id="vitrine">
-      <h2>Recomendações para você</h2>
-      <div class="produtos" id="produtos"></div>
-    </section>
+    <script>
+        const nomeUsuario = localStorage.getItem("nome") || "cliente";
+        const mensagem = `Olá ${nomeUsuario}, seja bem-vindo ao ClickObra App! Estou aqui para te ajudar.`;
 
-    <section id="agente">
-      <h2>Atendente Inteligente</h2>
-      <div id="chat">
-        <p id="resposta">Olá! Como posso te ajudar hoje?</p>
-        <button onclick="responderCliente()">Clique para falar</button>
-      </div>
-    </section>
-  </main>
+        document.getElementById("boasVindas").textContent = mensagem;
 
-  <script src="assets/js/main.js"></script>
+        function falar() {
+            const msg = new SpeechSynthesisUtterance(mensagem);
+            const voices = speechSynthesis.getVoices();
+            const vozFeminina = voices.find(v => v.lang.includes("pt-BR") && v.name.toLowerCase().includes("luciana") || v.name.toLowerCase().includes("camila")) || voices.find(v => v.lang.includes("pt-BR"));
+            if (vozFeminina) msg.voice = vozFeminina;
+            msg.rate = 1;
+            msg.pitch = 1;
+            speechSynthesis.speak(msg);
+        }
+
+        // Para garantir que as vozes estejam carregadas antes de usar
+        window.speechSynthesis.onvoiceschanged = () => {};
+    </script>
 </body>
 </html>
