@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ClickObra App</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    img {
+      width: 220px;
+      margin-bottom: 30px;
+    }
+    .mensagem {
+      font-size: 1.2rem;
+      max-width: 80%;
+      animation: fadeIn 2s ease-in-out;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+  <script>
+    setTimeout(() => {
+      window.location.href = "produtos.html";
+    }, 4000);
+  </script>
+</head>
+<body>
+  <img src="avatar_ia_masculino.png" alt="Avatar IA Masculino" />
+  <div class="mensagem">
+    Olá, seja bem-vindo ao <strong>ClickObra App</strong>.<br>
+    Em instantes, você será direcionado à nossa página de produtos.
+  </div>
+</body>
+</html>
